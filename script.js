@@ -27,10 +27,20 @@ function dateToString(date){
     datestr.year = date.year.toString();
     return datestr;
 }
-var date = {
-    day:15,
-    month:12,
-    year:2000
+function dateInAllFormats(date){
+    var datestr = dateToString(date);
+    var ddmmyyyy = datestr.day+datestr.month+datestr.year;
+    var mmddyyyy = datestr.month+datestr.day+datestr.year;
+    var yyyymmdd = datestr.year+datestr.month+datestr.day;
+    var ddmmyy = datestr.day+datestr.month+datestr.year.slice(-2);
+    var mmddyy = datestr.month+datestr.day+datestr.year.slice(-2);
+    var yymmdd = datestr.year.slice(-2)+datestr.month+datestr.day;
+    return  [ ddmmyyyy,mmddyyyy,yyyymmdd,ddmmyy,mmddyy,yymmdd];
+
 }
-console.log(date);
-console.log(dateToString(date));
+var date = {
+    day:2,
+    month:12,
+    year:2020
+}
+console.log(dateInAllFormats(date))
