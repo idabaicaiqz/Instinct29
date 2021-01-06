@@ -116,16 +116,32 @@ function previousPalindromeDate(date){
 
 var birthDate = document.querySelector("#input-date");
 var showButton = document.querySelector("#show-btn");
+var output = document.querySelector("#output")
 
 function clickHandler(){
     var bdayStr = birthDate.value;
 
     if(bdayStr!=0){
         var listOfDate = bdayStr.split('-');
-        console.log(listOfDate);
+        
+        var date = {
+            day : Number(listOfDate[2]),
+            month : Number(listOfDate[1]),
+            year : Number(listOfDate[0])
+    };
+    // console.log(date);
+    var isPalindrome = checkPalindromeForAllFormats(date);
+    if(isPalindrome){
+        output.innerText = "yaya! Your Birthday is a Palindrome!! 😉😉"
+    }
+    else{
+        var [count , nextDate] = nextPalindromeDate(date);
+        output.innerText = `The next palindrome date is ${nextDate.toString(day)}-${nextDate.toString(month)}-${nextDate.toString(year)}, you missed it by ${count} days! 😔 `
+    }
     }
 
 }
 
 showButton.addEventListener('click',clickHandler)
+
 
