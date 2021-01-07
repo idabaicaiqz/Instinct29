@@ -1,32 +1,32 @@
 function reverse(string){
-    var splitCharacters = string.split("");
-    var reversedCharacters = splitCharacters.reverse();
-    var joinedChar = reversedCharacters.join("");
-    return joinedChar;
+    var splitCharacters = string.split("");//gives an array of splited individual characters =>(7) ['m', 'a', 'n', 't', 'h', 'a', 'n']
+    var reversedCharacters = splitCharacters.reverse(); // =>(7) ['n', 'a', 'h', 't', 'n', 'a', 'm']
+    var joinedChar = reversedCharacters.join(""); // =>'nahtnam' if the given string is 'manthan'
+    return joinedChar;//'nahtnam'
     // return srting2.split("").reverse().join(""); ----same as above;
    
 }
 function isPalindrome(string){
    var reverse1 =  reverse(string);
-   return string ===reverse1;
+   return string === reverse1;
 }//returns boolean True or False
 function dateToString(date){
     var datestr = { day : "",month : "", year : ""}
      if(date.day < 10 ){
-         datestr.day = "0"+date.day;
+         datestr.day = "0"+date.day; // this gonna convert number into string while adding a zero
      }
      else{
-         datestr.day=date.day.toString();
+         datestr.day=date.day.toString(); // number to string
      }
      if(date.month < 10 ){
-        datestr.month = "0"+date.month;
+        datestr.month = "0"+date.month; // number to string
     }
     else{
         datestr.month=date.month.toString();
     }
     datestr.year = date.year.toString();
     return datestr;
-}
+}//Gives inpute date into string that was in number before
 function dateInAllFormats(date){
     var datestr = dateToString(date);
     var ddmmyyyy = datestr.day+datestr.month+datestr.year;
@@ -48,7 +48,7 @@ function checkPalindromeForAllFormats(date){
         }
     }
     return flag;
-}//Returns Boolean True or False(true if any of formats is a palindome)
+}//Returns Boolean True or False(true if any of format is a palindome)
 function isLeapYear(year){
     if(year%400===0){
         return true;
@@ -70,26 +70,26 @@ function isLeapYear(year){
          if(isLeapYear(year)){ // checking for leap year
              if(day>29){
                  day=1;
-                 month++
+                 month++;
              }
          }
          else{
              if(day>28){
                  day = 1;
-                 month++
+                 month++;
              }
          }
      }
      else{
-         //check if the day exceeds the ma days in month
+         //check if the day exceeds the max days in month
          if(day > daysInMonths[month - 1]){
              day = 1;
-             month++
+             month++;
          }
      }
      if(month > 12){
          month = 1;
-         year++
+         year++;
      }
      return{
          day:day,
@@ -110,8 +110,57 @@ function nextPalindromeDate(date){
  }
  return[count,nextDate];
 }  //gives next palindrome date if the given date is not a palindrome and also gives the count of days from the current date to the palindrome date
+function getPreviousDate(date){
+    var day = date.day - 1;
+    var month = date.month;
+    var year = date.year;
+    var daysInMonths =[31,28,31,30,31,30,31,31,30,31,30,31];
+    if(month === 3)
+    { 
+        if(isLeapYear(date.year)){
+            day = 29;
+            month--;
+        }
+        else{
+            day=28;
+            month--;
+        }
+    }
+    else
+    {
+        if(day === 0 && month ===1)
+        {
+            day = daysInMonths[month-2];
+            month = 12;
+            year--;
+        }
+        if(day === 0)
+        {
+            day = daysInMonths[month-2];
+            month--;
+
+        }
+    }
+    return {
+        day : day,
+        month:month,
+        year:year
+    }
+
+
+}
 function previousPalindromeDate(date){
-    //=> my exercise
+    count = 0;
+    var prevDate = getPreviousDate(date);
+    while(1){
+        count ++;
+        var x = checkPalindromeForAllFormats(prevDate);
+        if(x){
+            break;
+        }
+        prevDate = getPreviousDate(prevDate);
+    }
+    return [count,prevDate];
 }
 
 var birthDate = document.querySelector("#input-date");
